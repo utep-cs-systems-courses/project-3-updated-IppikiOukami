@@ -17,16 +17,15 @@ void wdt_c_handler()
 {
   static int s1 = 0;
   static int s2 = 0;
-  static int s = 0;
   static int ctr = 0;
 
   ctr++;
 
-  if(ctr == 250){
+  if(ctr == 250){               /* once/sec */ 
     ctr = 0;
     rds = 1;
   }
-  if(super_state == 1 && ++s1 == 125){
+  if(super_state == 1 && ++s1 == 125){ //quarter second
     state_advance();
     s1 = 0;
   }else if(super_state == 2){
@@ -59,9 +58,20 @@ void main()
       rds = 0;
     
       if(super_state == 1){}
-      else if(super_state == 2){}
-      else if(super_state == 3){}
-      else if(super_state == 4){}
+      else if(super_state == 2){
+	drawString5x7(40,40,"Buzzer :)",COLOR_YELLOW,COLOR_BLACK);
+	pState = 2;
+      }
+      else if(super_state == 3){
+	drawString5x7(40,40,"Buzzer :)",COLOR_BLACK,COLOR_WHITE);
+	drawString5x7(40,40,"Dimmer :)",COLOR_BLACK,COLOR_YELLOW);
+	pState = 3;
+      }
+      else if(super_state == 4){
+	if(pState == 3) drawString5x7(40,40,"Dimmer :)",COLOR_YELLOW,COLOR_YELLOW);
+	drawString5x7(midX -(4*11),midY,"DemoEnd",COLOR_WHITE,COLOR_BLACK);
+	pState = 4;
+      }
     }
     P1OUT &= ~LED_GREEN;
     or_sr(0x10);

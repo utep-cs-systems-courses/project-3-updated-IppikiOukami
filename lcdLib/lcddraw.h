@@ -60,6 +60,10 @@ void drawChar5x7(u_char col, u_char row, char c,
  */
 void drawRectOutline(u_char colMin, u_char rowMin, u_char width, u_char height,
 		     u_int colorBGR);
-#endif // included
 
 
+void drawChar5x7(u_char col, u_char row, char c, u_int fgColorBGR, u_int bgColorBGR);
+void drawChar8x12(u_char col, u_char row, char c, u_int fgColorBGR, u_int bgColorBGR);
+void drawChar11x16(u_char col, u_char row, char c, u_int fgColorBGR, u_int bgColorBGR);
+
+#endif //included

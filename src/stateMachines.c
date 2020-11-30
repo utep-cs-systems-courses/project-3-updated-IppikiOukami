@@ -7,21 +7,14 @@
 #include "buzzer.h"
 #include "switches.h"
 
+
 static short freq = 500;                              // Initial frequency of state 2.
 static short state2_status = 1;                       // Initial state for state 2
 
 char state1()
 {
   char changed = 0;
-  static int color = 1;
-  if (color){
-    changed = toggle_green();                         // if red change to green
-    color = 0;
-  }
-  else{
-    changed = toggle_red();                           // if green change to red
-    color = 1;
-  }
+  changed = toggle_red();
   leds_changed = changed;
   led_modify();
 }
@@ -43,17 +36,7 @@ char toggle_red()
   return 1;
 }
 
-char toggle_green()
-{
-  char changed = 0;
-  if (red_power) {                                 // if red on, turn green off if red off turn green on
-    green_power ^= 1;
-    buzzer_set_period(3000);
-    changed = 1;
-  }
-  return changed;
-}
-
+//Toggle_green not needed for this
                                                    // Pitch starts at 500 up to 5000, increases 1/10 seconds
 char state2()
 {
@@ -61,7 +44,6 @@ char state2()
   if (stateS2 == 1){
     state2_status = 1;
     red_power = 1;
-    green_power = 0;
     leds_changed = 1;
     led_modify();
     stateS2++;
@@ -69,7 +51,6 @@ char state2()
   else if (stateS2 == 2){
     state2_status = 0;
     red_power = 0;
-    green_power = 1;
     leds_changed = 1;
     led_modify();
     stateS2 = 0;
@@ -104,9 +85,9 @@ char state3()
 void dimLights(char x){
   static short dimCount = 0;
   switch(dimCount % x){
-  case 0: red_power = 1; green_power = 1; dimCount++; break;
-  case 1: red_power = 0; green_power = 0; dimCount++; break;
-  default: red_power = 0; green_power = 0; dimCount++; break;
+  case 0: red_power = 1; dimCount++; break;
+  case 1: red_power = 0; dimCount++; break;
+  default: red_power = 0; dimCount++; break;
   }
   leds_changed = 1;
   led_modify();
@@ -116,7 +97,6 @@ void dimLights(char x){
 char state4(){
   buzzer_set_period(0);
   red_power = 0;
-  // green_power; used to indicate CPU Status
   leds_changed = 1;
   led_modify();
   return 1;
