@@ -56,7 +56,9 @@ void main()
   while(1){
     if(rds == 1){
       rds = 0;
-    
+      if(super_state == 0){
+	drawString5x7(0,0,"Final Project", COLOR_WHITE,COLOR_BLACK);
+      }
       if(super_state == 1){}
       else if(super_state == 2){
 	drawString5x7(40,40,"Buzzer :)",COLOR_YELLOW,COLOR_BLACK);
