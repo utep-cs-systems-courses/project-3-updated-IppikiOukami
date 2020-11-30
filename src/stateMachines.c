@@ -8,19 +8,42 @@
 #include "switches.h"
 
 
-static short freq = 500;                              // Initial frequency of state 2.
-static short state2_status = 1;                       // Initial state for state 2
+short freq = 500;                              // Initial frequency of state 2.
+short state2_status = 1;                       // Initial state for state 2
 
-char state1()
-{
-  char changed = 0;
-  changed = toggle_red();
-  leds_changed = changed;
-  led_modify();
+void drawTriangle(u_char col, u_char row, u_char size, u_int color);
+
+void buzzer_advance();
+
+short get_period(short freq){
+  return 2000000/freq;
 }
 
-// Toggles Red
-char toggle_red()
+void lcd_state(int COLOR)
+{
+  u_char centerWidth = screenWidth/2 + 1;
+  u_char centerHeight = screenHeight/2 + 1;
+
+  drawTriangle(centerWidth, centerHeight-20, 10, COLOR);
+  drawTriangle(centerWidth-20, centerHeight, 10, COLOR);
+  drawTriangle(centerWidth, centerHeight+20, 10, COLOR);
+
+  drawString11x16(0,0,"Triangles",COLOR, COLOR_WHITE);
+}
+
+void drawErase()
+{
+  u_char centerWidth = screenWidth/2 + 1;
+  u_char centerHeight = screenHeight/2 + 1;
+
+  drawTriangle(centerWidth, centerHeight-20, 10, COLOR_BLACK);
+  drawTriangle(centerWidth-20, centerHeight, 10, COLOR_BLACK);
+  drawTriangle(centerWidth, centerHeight + 20, 10, COLOR_BLACK);
+
+  drawString11x16(0,0,"Triangles",COLOR_BLACK,COLOR_BLACK);
+}
+
+char state1()
 {
   static char stateS1 = 1;
   if (stateS1){
@@ -36,8 +59,6 @@ char toggle_red()
   return 1;
 }
 
-//Toggle_green not needed for this
-                                                   // Pitch starts at 500 up to 5000, increases 1/10 seconds
 char state2()
 {
   static short stateS2 = 0;
@@ -57,7 +78,7 @@ char state2()
   }
   return 1;
 }
-
+/*
 // If state2_status == 1, increase pitch. Otherwise, decrease pitch.
 void buzzer_advance(){
   if (state2_status) freq += 225;
@@ -65,6 +86,7 @@ void buzzer_advance(){
   short period = 2000000/freq;  // 2000000 / frequency works
   buzzer_set_period(period);
 }
+*/
 
 // Dimmer
 char state3()
