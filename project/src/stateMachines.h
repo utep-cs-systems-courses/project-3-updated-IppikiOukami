@@ -6,5 +6,6 @@ char toggle_red();
 char toggle_green();
 void buzzer_advance();
 void dimLights(char x);
+void lcd_update();
 
 #endif
