@@ -1,11 +1,16 @@
 #include <msp430.h>
+#include <libTimer.h>
+#include <lcdutils.h>
+#include <lcddraw.h>
 #include "stateMachines.h"
 #include "led.h"
 #include "buzzer.h"
 #include "switches.h"
 
+short reDrawScreen;                                   // From wakedemo
+
 static short freq = 500;                              // Initial frequency of state 2.
-static short state2_status = 1;                       // Initial state for state 2.
+static short state2_status = 1;                       // Initial state for state 2
 
 char state1()
 {
@@ -113,14 +118,15 @@ void dimLights(char x){
 char state4(){
   buzzer_set_period(0);
   red_power = 0;
-  green_power = 0;
+  // green_power; used to indicate CPU Status
   leds_changed = 1;
   led_modify();
   return 1;
 }
 
+// Translating this to Assembly ;P
 // Changes state when super_state is changed.
-void state_advance()
+/*void state_advance()
 {
   char changed = 0;
   switch(super_state){
@@ -139,4 +145,4 @@ void state_advance()
   }
   leds_changed = changed;
   led_modify();
-}
+}*/

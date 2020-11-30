@@ -10,6 +10,6 @@
 void led_init();                                           // Initialize LEDs
 void led_modify();                                         // Updates LEDs
 
-extern unsigned char leds_changed, green_power, red_power; // more flags
+extern unsigned char leds_changed, green_power, red_power; // more "flags"
 
 #endif
