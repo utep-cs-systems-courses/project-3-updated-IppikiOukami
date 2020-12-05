@@ -82,23 +82,22 @@ void main()
       }
       else if(super_state == 3){
 	clearScreen(COLOR_BLACK);
-	for (u_char r = 0; r < 6; r++){
+	for (u_char r = 0; r < (midY/2); r++){
 	  for (u_char c = 0; c <= r; c++){
+	    drawPixel(midX-c, midY+r-(6),COLOR_YELLOW);
 	    drawPixel(midX-c, midY-r-1,COLOR_WHITE);
-	    drawPixel(midX-c, midY+r-(6),COLOR_WHITE);
-	    drawPixel(midX+c, midY-r-1,COLOR_WHITE);
-	    drawPixel(midX+c, midY+r-(6), COLOR_WHITE);
 	  }
 	}
 	pState = 3;
       }
       else if(super_state == 4){
-	if(pState != 4) drawErase();
-	pState = 4;
+	if(pState != 4) clearScreen(COLOR_BLUE);
+	drawString8x12(0,0,"2+2=Fish",COLOR_WHITE,COLOR_BLUE);
+    	pState = 4;
       }
     }
-    P1OUT &= ~LED_GREEN;
-    or_sr(0x10);
-    P1OUT |= LED_GREEN;
+    P1OUT &= ~LED_GREEN; // Turn off green (CPU Sleep)
+    or_sr(0x10);         // GIE
+    P1OUT |= LED_GREEN;  // Turn on green LED (wake)
   }
 }
