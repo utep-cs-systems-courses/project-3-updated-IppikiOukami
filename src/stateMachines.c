@@ -31,18 +31,6 @@ void lcd_state(int COLOR)
   drawString11x16(0,0,"Triangles",COLOR, COLOR_WHITE);
 }
 
-void drawErase()
-{
-  u_char centerWidth = screenWidth/2 + 1;
-  u_char centerHeight = screenHeight/2 + 1;
-
-  drawTriangle(centerWidth, centerHeight-20, 10, COLOR_BLACK);
-  drawTriangle(centerWidth-20, centerHeight, 10, COLOR_BLACK);
-  drawTriangle(centerWidth, centerHeight + 20, 10, COLOR_BLACK);
-
-  drawString11x16(0,0,"Triangles",COLOR_BLACK,COLOR_BLACK);
-}
-
 char state1()
 {
   static char stateS1 = 1;

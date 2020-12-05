@@ -8,6 +8,5 @@ char toggle_red();
 void buzzer_advance();
 void dimLights(char x);
 void lcd_state(int color);
-void drawErase();
 
 #endif

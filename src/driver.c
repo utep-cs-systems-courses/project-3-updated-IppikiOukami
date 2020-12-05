@@ -13,6 +13,9 @@ static short pState = 0;
 u_char midX = screenWidth/2 + 1;
 u_char midY = screenHeight/2 + 1;
 
+// if positive return true, false otherwise
+int cmp_assembly(int num);
+
 void drawTriangle(u_char col, u_char row, u_char size, u_int color)
 {
   for (u_char r = 0; r < size; r++){
@@ -92,8 +95,14 @@ void main()
       }
       else if(super_state == 4){
 	if(pState != 4) clearScreen(COLOR_BLUE);
-	drawString8x12(0,0,"2+2=Fish",COLOR_WHITE,COLOR_BLUE);
-    	pState = 4;
+	drawString8x12(0,0,"2 + 2 = Fish",COLOR_WHITE,COLOR_BLUE);
+	if(cmp_assembly(2) != 0){
+	  drawString8x12(midX,midY,"2 > 0",COLOR_BLACK,COLOR_BLUE);
+	}
+	if(cmp_assembly(-2) == 0){
+	  drawString8x12(midX,midY-20,"-1 < 0",COLOR_RED,COLOR_BLUE);
+	}
+	pState = 4;
       }
     }
     P1OUT &= ~LED_GREEN; // Turn off green (CPU Sleep)
