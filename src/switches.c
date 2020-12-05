@@ -4,6 +4,7 @@
 #include "stateMachines.h"
 
 char super_state;
+char pState;
 
 static char switch_update_interrupt_sense()
 {
@@ -26,7 +27,8 @@ void switch_init()
 void switch_IH()                //Switch handler
 {
   char p2val = switch_update_interrupt_sense();
-
+  pState = super_state;
+  
   if ( (p2val & SW1) == 0)      // S1
     super_state = 1;
   else if ( (p2val & SW2) == 0) // S2

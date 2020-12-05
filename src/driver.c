@@ -67,31 +67,21 @@ void main()
   while(1){
     if(rds == 1){
       rds = 0;
-
-      static char sColor = 0;
-      u_int COLOR;
-
-      if(sColor == 1){
-	COLOR = COLOR_YELLOW; sColor = 1;
-      }else if(sColor = 1){
-	COLOR = COLOR_GREEN; sColor = 0;
-      }
-      
+   
       if(super_state == 0){
 	drawString8x12(0,0,"Final Project", COLOR_WHITE,COLOR_BLACK);
       }
       else if(super_state == 1){
-	drawString8x12(0,0,"Final Project", COLOR_BLACK,COLOR_BLACK);
+	clearScreen(COLOR_BLACK);
 	lcd_state(COLOR_GREEN);
 	pState = 1;
       }
       else if(super_state == 2){
-	drawString5x7(20,screenHeight - 10,"Buzzer",COLOR_YELLOW,COLOR_BLACK);
 	lcd_state(COLOR_PINK);
 	pState = 2;
       }
       else if(super_state == 3){
-	drawErase();
+	clearScreen(COLOR_BLACK);
 	for (u_char r = 0; r < 6; r++){
 	  for (u_char c = 0; c <= r; c++){
 	    drawPixel(midX-c, midY-r-1,COLOR_WHITE);
@@ -100,15 +90,10 @@ void main()
 	    drawPixel(midX+c, midY+r-(6), COLOR_WHITE);
 	  }
 	}
-	drawString5x7(20,screenHeight - 10,"Buzzer",COLOR_BLACK,COLOR_BLACK);
-	drawString8x12(20,screenHeight - 10,"Dim Broke",COLOR_WHITE,COLOR_BLACK);
 	pState = 3;
       }
       else if(super_state == 4){
 	if(pState != 4) drawErase();
-	drawString5x7(20,screenHeight - 10,"Buzzer", COLOR_BLACK,COLOR_BLACK);
-	drawString8x12(20,screenHeight - 10,"Dim Broke",COLOR_BLACK,COLOR_BLACK);
-
 	pState = 4;
       }
     }
